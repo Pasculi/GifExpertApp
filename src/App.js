@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <h1>GifExpertApp</h1>
-      <AddCategory categories={categories} setCategoria = {setCategoria}/>
+      <AddCategory setCategoria = {setCategoria}/>
 
       <ol>
         {categories.map((cat, index) => {
