@@ -1,44 +1,31 @@
 import React, { useState } from 'react'
 
-const AddCategory = ({setCategoria}) => {
+const AddCategory = ({ onNewCategory }) => {
 
-    const [inputValue, setInputValue] = useState();
-    const inputCategory = document.querySelector('#input-category')
-
-
-    const handleInput = ({target})=>{
-       const inputError = target.id
-
-      setInputValue (target.value)
-        const errorInput = document.querySelector(`.error`)
-
-        if(inputValue.length <= 2 || inputValue.length === 0){
-            errorInput.classList.add(`error-${inputError}`);
-            errorInput.textContent = "Este campo es requerido"
-        }else{
-            errorInput.classList.remove(`error-${inputError}`);
-        }
-       
+  const [inputValue, setInputValue] = useState('');
 
   
-    }
-
-    const handleSubmit = (evt) => {
-        evt.preventDefault();        
-            setCategoria( cat => [inputValue, ...cat]);
-            inputCategory.value = " ";
-        }
+  const onInputChange = ({ target }) => {
+    setInputValue(target.value);
+  }
   
-    
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+    if (inputValue.trim().length <= 1) return;
+    onNewCategory(inputValue.trim());
+    setInputValue('')
+  }
+
+
 
   return (
     <>
-        <h2>Add a new category</h2>
-      <form onSubmit={handleSubmit}>
-      <div className='group-input'>
-        <input id="input-category" type="text" placeholder="Category name" onChange={handleInput} />{" "}
-        <span className="error " >Elemento requerido</span>
-      </div>
+      <h2>Add a new category</h2>
+      <form onSubmit={onSubmit}>
+        <div className='group-input'>
+          <input id="input-category" type="text" value={inputValue } placeholder="Category name" onChange={onInputChange} />{" "}
+          <span className="error " >Elemento requerido</span>
+        </div>
         <button className='btn' type="submit">Add category</button>
       </form>
     </>
